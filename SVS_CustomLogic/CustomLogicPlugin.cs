@@ -10,7 +10,7 @@ using SV;
 using SV.Chara;
 using SV.Title;
 
-namespace SVS_CustomTraits
+namespace SVS_CustomLogic
 {
     [BepInPlugin(GUID, DisplayName, Version)]
     public class CustomLogicPlugin : BasePlugin
@@ -54,7 +54,7 @@ namespace SVS_CustomTraits
             }
 
             //Set Custom Favor Rates
-            [HarmonyPriority(500)]
+            [HarmonyPriority(800)]
             [HarmonyPrefix]
             [HarmonyPatch(typeof(FavourableImpressionManager), nameof(FavourableImpressionManager.IndividualityCorrection))]
             public static void CustomLogicFavorRates(FavourableImpressionManager __instance, bool _isActive, bool _isOneWay, HumanData _myCharaData, CharactersGameParameter _myGameParam, HumanData _targetCharaData, CharactersGameParameter _targetGameParam)
@@ -63,7 +63,7 @@ namespace SVS_CustomTraits
             }
 
             //Set Reaction/Interruption
-            [HarmonyPriority(500)]
+            [HarmonyPriority(800)]
             [HarmonyPostfix]
             [HarmonyPatch(typeof(ReactionManager), nameof(ReactionManager.Confirmation))]
             public static int CustomLogicReaction(int __result, AI _ai, AI _ai1, AI _ai2, int no)
@@ -72,7 +72,7 @@ namespace SVS_CustomTraits
             }
 
             //Set Target Character
-            [HarmonyPriority(500)]
+            [HarmonyPriority(800)]
             [HarmonyPostfix]
             [HarmonyPatch(typeof(ThinkingManager), nameof(ThinkingManager.InterpersonalCommandSelectionTarget))]
             public static int SetTarget(int __result, Actor _actor, int _commandID)
@@ -81,7 +81,7 @@ namespace SVS_CustomTraits
             }
 
             //Set Character Actions
-            [HarmonyPriority(500)]
+            [HarmonyPriority(800)]
             [HarmonyPostfix]
             [HarmonyPatch(typeof(SVThinking), nameof(SVThinking.OnUpdate))]
             public static void CustomLogicAction(SVThinking __instance)
@@ -90,7 +90,7 @@ namespace SVS_CustomTraits
             }
 
             //Set Action success Rate 
-            [HarmonyPriority(500)]
+            [HarmonyPriority(800)]
             [HarmonyPostfix]
             [HarmonyPatch(typeof(BaseAnswer), nameof(BaseAnswer.Judge))]
             public static void CustomLogicAnswerRate(bool __result, YesNoJudgeManager.AnswerInfo _ansInfo, YesNoJudgeManager.YesNoInfo _ynInfo, int _commandID, int _questionCount, Il2CppStructArray<bool> _calcs)

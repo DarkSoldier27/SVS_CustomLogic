@@ -7,12 +7,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SVS_CustomTraits
+namespace SVS_CustomLogic
 {
     internal class CustomLogic
     {
         private static Random _rnd = new Random();
-        public static readonly Dictionary<int, CustomLogicParam.TraitParam> traitDic = [];
+        private static readonly Dictionary<int, CustomLogicParam.TraitParam> traitDic = [];
+
+        private static bool traitLoaded = false;
         /// <summary>
         /// Calculates the type of answer base on the rate values. Returns 0 for Yes and 1 for No. Rate value equal or over 100 is always yes.
         /// </summary>
@@ -26,7 +28,7 @@ namespace SVS_CustomTraits
             return 1;
         }
         /// <summary>
-        /// Returns the map ID of the character. Returns -2 if the character is unloaded and -1 if they has't arrive yet.
+        /// Returns the map ID of the character. Returns -2 if the character is unloaded and -1 if they have not arrive yet.
         /// </summary>
         /// <param name="chara"></param>
         /// <returns></returns>
@@ -44,9 +46,10 @@ namespace SVS_CustomTraits
 
         public static void AddTrait()
         {
+            if (traitLoaded) return;
             traitDic.Clear();
 
-            //Custom
+            //Template
             traitDic.Add(999, new CustomLogicParam.TraitParam()
             {
                 TraitID = 999,
@@ -82,16 +85,16 @@ namespace SVS_CustomTraits
                 Description = "If dating someone, no physical contact accepted with anyone else. Will also avoid other suitors trying to steal them away."
             });
             //Stalker
-            traitDic.Add(50, new CustomLogicParam.TraitParam()
+            traitDic.Add(44, new CustomLogicParam.TraitParam()
             {
-                TraitID = 50,
+                TraitID = 44,
                 TraitName = "Stalker",
                 Description = "Sometimes they will follow a character they are interested in, or stay near them"
             });
             //Lazy
-            traitDic.Add(51, new CustomLogicParam.TraitParam()
+            traitDic.Add(45, new CustomLogicParam.TraitParam()
             {
-                TraitID = 51,
+                TraitID = 45,
                 TraitName = "Lazy",
                 Description = "Doesn't like doing activities and less likely to help with them."
             });
@@ -107,6 +110,7 @@ namespace SVS_CustomTraits
                 }
                 CustomLogicPlugin.Log.LogInfo($"Loaded {traitDic.Count} custom traits");
             }
+            traitLoaded = true;
         }
         public static void CustomLogicAnswerRate(YesNoJudgeManager.AnswerInfo answerInfo, YesNoJudgeManager.YesNoInfo yesNoInfo, int commandID, int questionCount)
         {
@@ -129,24 +133,24 @@ namespace SVS_CustomTraits
                         {
                             case 40://Sibling
                                 if (CustomLogicPlugin.GetShowLog()) CustomLogicPlugin.Log.LogInfo($"Applying Sinbling trait answer rate logic");
-                                if (answerInfo.ans != 2) answerRate = CustomLogicConditions.TraitSibling.SetAnswer(answerInfo, yesNoInfo, commandID, questionCount, answerRate);
+                                if (answerInfo.ans != 2) answerRate += CustomTraitConditions.TraitSibling.SetAnswer(answerInfo, yesNoInfo, commandID, questionCount, answerRate);
                                 break;
                             case 41://Parent
                                 if (CustomLogicPlugin.GetShowLog()) CustomLogicPlugin.Log.LogInfo($"Applying Parent trait answer rate logic");
-                                if (answerInfo.ans != 2) answerRate = CustomLogicConditions.TraitSibling.SetAnswer(answerInfo, yesNoInfo, commandID, questionCount, answerRate);
+                                if (answerInfo.ans != 2) answerRate += CustomTraitConditions.TraitSibling.SetAnswer(answerInfo, yesNoInfo, commandID, questionCount, answerRate);
                                 break;
                             case 42://Son or daughter
                                 if (CustomLogicPlugin.GetShowLog()) CustomLogicPlugin.Log.LogInfo($"Applying Son or daughter trait answer rate logic");
-                                if (answerInfo.ans != 2) answerRate = CustomLogicConditions.TraitSibling.SetAnswer(answerInfo, yesNoInfo, commandID, questionCount, answerRate);
+                                if (answerInfo.ans != 2) answerRate += CustomTraitConditions.TraitSibling.SetAnswer(answerInfo, yesNoInfo, commandID, questionCount, answerRate);
                                 break;
-                            case 51://Lazy
+                            case 45://Lazy
                                 if (CustomLogicPlugin.GetShowLog()) CustomLogicPlugin.Log.LogInfo($"Applying Lazy trait answer rate logic");
-                                if (answerInfo.ans != 2) answerRate = CustomLogicConditions.TraitLazy.SetAnswer(answerInfo, yesNoInfo, commandID, questionCount, answerRate);
+                                if (answerInfo.ans != 2) answerRate += CustomTraitConditions.TraitLazy.SetAnswer(answerInfo, yesNoInfo, commandID, questionCount, answerRate);
                                 break;
                             case 999://TestTrait
                                 //if (CustomTraitsPlugin.GetShowLog()) CustomTraitsPlugin.Log.LogInfo($"");
                                 if (CustomLogicPlugin.GetShowLog()) CustomLogicPlugin.Log.LogInfo($"Test Trait answer rate called");
-                                if (answerInfo.ans != 2) answerRate = CustomLogicConditions.TraitTemplate.SetAnswer(answerInfo, yesNoInfo, commandID, questionCount, answerRate);
+                                if (answerInfo.ans != 2) answerRate += CustomTraitConditions.TraitTemplate.SetAnswer(answerInfo, yesNoInfo, commandID, questionCount, answerRate);
                                 break;
                         }
                     }
@@ -157,10 +161,9 @@ namespace SVS_CustomTraits
                     answerInfo.ans = CalcAnswer(answerRate);
                     if (answerRate < 0) answerInfo.rate = 0;
                     else answerInfo.rate = answerRate;
-                } 
+                }
             }
         }
-
         public static int CustomLogicReaction(AI charaAI, AI charaAI_2, AI charaAI_3, int no, int reactionNo)
         {
             if (charaAI is null || charaAI_2 is null || charaAI_3 is null) return reactionNo;
@@ -172,9 +175,13 @@ namespace SVS_CustomTraits
                     {
                         switch (trait.Key)
                         {
-                            case 51://Lazy
+                            case 45://Lazy
                                 if (CustomLogicPlugin.GetShowLog()) CustomLogicPlugin.Log.LogInfo($"Applying Lazy trait reaction logic");
-                                CustomLogicConditions.TraitLazy.SetReaction(charaAI, charaAI_2, charaAI_3, no, reactionNo);
+                                CustomTraitConditions.TraitLazy.SetReaction(charaAI, charaAI_2, charaAI_3, no, reactionNo);
+                                break;
+                            case 999:
+                                if (CustomLogicPlugin.GetShowLog()) CustomLogicPlugin.Log.LogInfo($"Applying TestTrait trait reaction logic");
+                                CustomTraitConditions.TraitTemplate.SetReaction(charaAI, charaAI_2, charaAI_3, no, reactionNo);
                                 break;
                         }
                     }
@@ -183,7 +190,6 @@ namespace SVS_CustomTraits
 
             return reactionNo;
         }
-
         public static void CustomLogicAction(SVThinking thinking)
         {
             if (thinking.CharaCtrl is null) return;
@@ -198,17 +204,17 @@ namespace SVS_CustomTraits
                     {
                         switch (trait.Key)
                         {
-                            case 50://Stalker
+                            case 44://Stalker
                                 if (CustomLogicPlugin.GetShowLog()) CustomLogicPlugin.Log.LogInfo($"Applying Stalker trait action logic");
-                                CustomLogicConditions.TraitStalker.SetAction(thinking);
+                                CustomTraitConditions.TraitStalker.SetAction(thinking);
                                 break;
-                            case 51://Lazy
+                            case 45://Lazy
                                 if (CustomLogicPlugin.GetShowLog()) CustomLogicPlugin.Log.LogInfo($"Applying Lazy trait action logic");
-                                CustomLogicConditions.TraitLazy.SetAction(thinking);
+                                CustomTraitConditions.TraitLazy.SetAction(thinking);
                                 break;
                             case 999://TestTrait
                                 if (CustomLogicPlugin.GetShowLog()) CustomLogicPlugin.Log.LogInfo($"Applying Template trait action logic");
-                                CustomLogicConditions.TraitTemplate.SetAction(thinking);
+                                CustomTraitConditions.TraitTemplate.SetAction(thinking);
                                 break;
                         }
                     }
@@ -228,19 +234,19 @@ namespace SVS_CustomTraits
                         {
                             case 40://Sibling
                                 if (CustomLogicPlugin.GetShowLog()) CustomLogicPlugin.Log.LogInfo($"Applying Sibling trait Favorability Called");
-                                CustomLogicConditions.TraitSibling.SetFavorabiltyGain(favourable, _myCharaData, _myGameParam, _targetCharaData, _targetGameParam);
+                                CustomTraitConditions.TraitSibling.SetFavorabiltyGain(favourable, _myCharaData, _myGameParam, _targetCharaData, _targetGameParam);
                                 break;
                             case 41://Parent
                                 if (CustomLogicPlugin.GetShowLog()) CustomLogicPlugin.Log.LogInfo($"Applying Parent trait favorability Logic");
-                                CustomLogicConditions.TraitParent.SetFavorabiltyGain(favourable, _myCharaData, _myGameParam, _targetCharaData, _targetGameParam);
+                                CustomTraitConditions.TraitParent.SetFavorabiltyGain(favourable, _myCharaData, _myGameParam, _targetCharaData, _targetGameParam);
                                 break;
                             case 42://SonDaughter
                                 if (CustomLogicPlugin.GetShowLog()) CustomLogicPlugin.Log.LogInfo($"Applying SonDaughter trait favorability logic");
-                                CustomLogicConditions.TraitSonDaughter.SetFavorabiltyGain(favourable, _myCharaData, _myGameParam, _targetCharaData, _targetGameParam);
+                                CustomTraitConditions.TraitSonDaughter.SetFavorabiltyGain(favourable, _myCharaData, _myGameParam, _targetCharaData, _targetGameParam);
                                 break;
                             case 999://TestTrait
                                 if (CustomLogicPlugin.GetShowLog()) CustomLogicPlugin.Log.LogInfo($"Applying Test trait favorability logic");
-                                CustomLogicConditions.TraitTemplate.SetFavorabiltyGain(favourable, _isActive, _isOneWay, _myCharaData, _myGameParam, _targetCharaData, _targetGameParam);
+                                CustomTraitConditions.TraitTemplate.SetFavorabiltyGain(favourable, _isActive, _isOneWay, _myCharaData, _myGameParam, _targetCharaData, _targetGameParam);
                                 break;
                         }
                     }

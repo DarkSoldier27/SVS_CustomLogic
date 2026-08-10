@@ -1,0 +1,13 @@
+H:\Modding Work\SVS\[Plugins]\SVS Plugins\SVS_CustomLogic\SVS_CustomLogic\obj\Debug\net6.0\SVS_CustomLogic.csproj.AssemblyReference.cache
+H:\Modding Work\SVS\[Plugins]\SVS Plugins\SVS_CustomLogic\SVS_CustomLogic\obj\Debug\net6.0\MyPluginInfo.cs
+H:\Modding Work\SVS\[Plugins]\SVS Plugins\SVS_CustomLogic\SVS_CustomLogic\obj\Debug\net6.0\SVS_CustomLogic.GeneratedMSBuildEditorConfig.editorconfig
+H:\Modding Work\SVS\[Plugins]\SVS Plugins\SVS_CustomLogic\SVS_CustomLogic\obj\Debug\net6.0\SVS_CustomLogic.AssemblyInfoInputs.cache
+H:\Modding Work\SVS\[Plugins]\SVS Plugins\SVS_CustomLogic\SVS_CustomLogic\obj\Debug\net6.0\SVS_CustomLogic.AssemblyInfo.cs
+H:\Modding Work\SVS\[Plugins]\SVS Plugins\SVS_CustomLogic\SVS_CustomLogic\obj\Debug\net6.0\SVS_CustomLogic.csproj.CoreCompileInputs.cache
+H:\Modding Work\SVS\[Plugins]\SVS Plugins\SVS_CustomLogic\SVS_CustomLogic\bin\Debug\net6.0\SVS_CustomLogic.deps.json
+H:\Modding Work\SVS\[Plugins]\SVS Plugins\SVS_CustomLogic\SVS_CustomLogic\bin\Debug\net6.0\SVS_CustomLogic.dll
+H:\Modding Work\SVS\[Plugins]\SVS Plugins\SVS_CustomLogic\SVS_CustomLogic\bin\Debug\net6.0\SVS_CustomLogic.pdb
+H:\Modding Work\SVS\[Plugins]\SVS Plugins\SVS_CustomLogic\SVS_CustomLogic\obj\Debug\net6.0\SVS_CustomLogic.dll
+H:\Modding Work\SVS\[Plugins]\SVS Plugins\SVS_CustomLogic\SVS_CustomLogic\obj\Debug\net6.0\refint\SVS_CustomLogic.dll
+H:\Modding Work\SVS\[Plugins]\SVS Plugins\SVS_CustomLogic\SVS_CustomLogic\obj\Debug\net6.0\SVS_CustomLogic.pdb
+H:\Modding Work\SVS\[Plugins]\SVS Plugins\SVS_CustomLogic\SVS_CustomLogic\obj\Debug\net6.0\ref\SVS_CustomLogic.dll

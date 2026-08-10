@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <AssemblyName>SVS_CustomTraits</AssemblyName>
+    <AssemblyName>SVS_CustomLogic</AssemblyName>
     <Product>Custom traits for SVS</Product>
     <Version>0.1.0</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -12,7 +12,7 @@
       https://nuget.bepinex.dev/v3/index.json;
       https://nuget.samboy.dev/v3/index.json
     </RestoreAdditionalProjectSources>
-    <RootNamespace>SVS_CustomTraits</RootNamespace>
+    <RootNamespace>SVS_CustomLogic</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,4 +1,4 @@
-﻿namespace SVS_CustomTraits
+﻿namespace SVS_CustomLogic
 {
     internal class CustomLogicParam
     {
