@@ -511,7 +511,6 @@ namespace SVS_CustomLogic
                 //Get character BehaviourController.
                 BehaviourController charaBC = thinking.CharaCtrl;
                 
-                //The character will go to the shrine when it has nothing to do.
                 //Check if the character action is a map action.
                 if (charaBC.target.kind == BehaviourController.TargetInfo.TargetKind.Map && chara.charasGameParam.commandNo < 0 && charaBC.target.type == 0)
                 {
@@ -521,7 +520,7 @@ namespace SVS_CustomLogic
                     if (charaBC.target.job != -1)
                     {
                         var lazyChance = _rnd.Next(0,100);
-                        if (lazyChance < 30) return;
+                        if (lazyChance < 30) return; //30% Chance of doing other map actions like: Job, Study or Exercise
                         //Checks if the map exist
                         if (MapManager.Instance.MapListTable.ContainsKey(mapID))
                         {
