@@ -97,6 +97,15 @@ namespace SVS_CustomLogic
             {
                 if (__result) CustomLogic.CustomLogicAnswerRate(_ansInfo, _ynInfo, _commandID, _questionCount);
             }
+
+            //Set Mood Rate
+            [HarmonyPriority(800)]
+            [HarmonyPrefix]
+            [HarmonyPatch(typeof(ConditionManager), nameof(ConditionManager.CharaAdd))]
+            public static void CustomLogicMoodRate(ConditionManager __instance, Actor _actor, Actor _target, Actor _third, bool _isActive, bool _isEveryone, bool _isIndividualityCalc, List<int> _adds)
+            {
+                //Empty
+            }
         }
     }
 }
